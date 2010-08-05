@@ -84,7 +84,7 @@ module AmazonDocExampleData
 end
 
 class Test::Unit::TestCase
-  include AWS::S3
+  include SSS
   
   def sample_proxy_settings
     {:host => 'http://google.com', :port => 8080, :user => 'marcel', :password => 'secret'}

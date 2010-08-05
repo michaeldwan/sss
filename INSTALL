@@ -30,7 +30,7 @@ If you go the svn route, be sure that you have all the dependencies installed. T
   
 == Dependencies
 
-AWS::S3 requires Ruby 1.8.4 or greater. 
+SSS requires Ruby 1.8.4 or greater. 
 
 It also has the following dependencies:
 
@@ -40,7 +40,7 @@ It also has the following dependencies:
 
 === XML parsing (xml-simple)
 
-AWS::S3 depends on XmlSimple (http://xml-simple.rubyforge.org/). When installing aws/s3 with
+SSS depends on XmlSimple (http://xml-simple.rubyforge.org/). When installing aws/s3 with
 Rubygems, this dependency will be taken care of for you. Otherwise, installation instructions are listed on the xml-simple
 site.
 
@@ -48,8 +48,8 @@ If your system has the Ruby libxml bindings installed (http://libxml.rubyforge.o
 
 === XML generation (builder)
 
-AWS::S3 also depends on the Builder library (http://builder.rubyforge.org/ and http://rubyforge.org/projects/builder/). This will also automatically be installed for you when using Rubygems.
+SSS also depends on the Builder library (http://builder.rubyforge.org/ and http://rubyforge.org/projects/builder/). This will also automatically be installed for you when using Rubygems.
 
 === Content type inference (mime-types)
 
-AWS::S3 depends on the MIME::Types library (http://mime-types.rubyforge.org/) to infer the content type of an object that does not explicitly specify it. This library will automatically be installed for you when using Rubygems.
+SSS depends on the MIME::Types library (http://mime-types.rubyforge.org/) to infer the content type of an object that does not explicitly specify it. This library will automatically be installed for you when using Rubygems.

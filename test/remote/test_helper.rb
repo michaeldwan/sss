@@ -11,7 +11,7 @@ TEST_BUCKET = 'aws-s3-tests'
 TEST_FILE   = File.dirname(__FILE__) + '/test_file.data'
 
 class Test::Unit::TestCase
-  include AWS::S3
+  include SSS
   def establish_real_connection
     Base.establish_connection!(
       :access_key_id     => ENV['AMAZON_ACCESS_KEY_ID'], 

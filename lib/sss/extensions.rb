@@ -194,12 +194,12 @@ class Module
   
   # Transforms MarcelBucket into
   #
-  #   class MarcelBucket < AWS::S3::Bucket
+  #   class MarcelBucket < SSS::Bucket
   #     set_current_bucket_to 'marcel'
   #   end
   def const_missing_from_s3_library(sym)
     if sym.to_s =~ /^(\w+)(Bucket|S3Object)$/
-      const = const_set(sym, Class.new(AWS::S3.const_get($2)))
+      const = const_set(sym, Class.new(SSS.const_get($2)))
       const.current_bucket = $1.underscore
       const
     else

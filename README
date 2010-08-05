@@ -1,6 +1,6 @@
-= AWS::S3
+= SSS
 
-AWS::S3 is a Ruby library for Amazon's Simple Storage Service's REST API (http://aws.amazon.com/s3).
+SSS is a Ruby library for Amazon's Simple Storage Service's REST API (http://aws.amazon.com/s3).
 Full documentation of the currently supported API can be found at http://docs.amazonwebservices.com/AmazonS3/2006-03-01.
 
 == Getting started
@@ -11,14 +11,14 @@ To get started you need to require 'aws/s3':
   irb(main):001:0> require 'aws/s3'
   # => true
 
-The AWS::S3 library ships with an interactive shell called <tt>s3sh</tt>. From within it, you have access to all the operations the library exposes from the command line.
+The SSS library ships with an interactive shell called <tt>s3sh</tt>. From within it, you have access to all the operations the library exposes from the command line.
 
   % s3sh
   >> Version
 
 Before you can do anything, you must establish a connection using Base.establish_connection!.  A basic connection would look something like this:
 
-  AWS::S3::Base.establish_connection!(
+  SSS::Base.establish_connection!(
     :access_key_id     => 'abc', 
     :secret_access_key => '123'
   )
@@ -40,10 +40,10 @@ Then load it in your shell's rc file.
     source "$HOME/.amazon_keys";
   fi
 
-See more connection details at AWS::S3::Connection::Management::ClassMethods.
+See more connection details at SSS::Connection::Management::ClassMethods.
 
 
-== AWS::S3 Basics
+== SSS Basics
 === The service, buckets and objects
 
 The three main concepts of S3 are the service, buckets and objects. 
@@ -70,7 +70,7 @@ to create a bucket with a name that is already taken, you will get an error.
 Assuming the name you chose isn't already taken, your new bucket will now appear in the bucket list:
 
   Service.buckets
-  # => [#<AWS::S3::Bucket @attributes={"name"=>"jukebox"}>]
+  # => [#<SSS::Bucket @attributes={"name"=>"jukebox"}>]
 
 Once you have succesfully created a bucket you can you can fetch it by name using Bucket.find.
 
@@ -98,12 +98,12 @@ To add an object to a bucket you specify the name of the object, its value, and 
 You'll see your file has been added to it:
 
   music_bucket.objects
-  # => [#<AWS::S3::S3Object '/jukebox/black-flowers.mp3'>]
+  # => [#<SSS::S3Object '/jukebox/black-flowers.mp3'>]
 
 You can treat your bucket like a hash and access objects by name:
 
   jukebox['black-flowers.mp3']
-  # => #<AWS::S3::S3Object '/jukebox/black-flowers.mp3'>
+  # => #<SSS::S3Object '/jukebox/black-flowers.mp3'>
 
 In the event that you want to delete a bucket, you can use Bucket.delete.
 
@@ -254,7 +254,7 @@ may be desirable for very large files so they are not read into memory all at on
 If you plan on always using a specific bucket for certain files, you can skip always having to specify the bucket by creating 
 a subclass of Bucket or S3Object and telling it what bucket to use:
 
-  class JukeBoxSong < AWS::S3::S3Object
+  class JukeBoxSong < SSS::S3Object
     set_current_bucket_to 'jukebox'
   end
 
@@ -335,8 +335,8 @@ For both buckets and objects, you can use the <tt>acl</tt> method to see its acc
 
   policy = S3Object.acl('kiss.jpg', 'marcel')
   pp policy.grants
-  [#<AWS::S3::ACL::Grant FULL_CONTROL to noradio>,
-   #<AWS::S3::ACL::Grant READ to AllUsers Group>]
+  [#<SSS::ACL::Grant FULL_CONTROL to noradio>,
+   #<SSS::ACL::Grant READ to AllUsers Group>]
 
 Policies are made up of one or more grants which grant a specific permission to some grantee. Here we see the default FULL_CONTROL grant 
 to the owner of this object. There is also READ permission granted to the Allusers Group, which means anyone has read access for the object.
@@ -347,13 +347,13 @@ the object itself (for example, from a browser) but it does not allow them to re
 First we'll create a new grant object:
 
   grant = ACL::Grant.new
-  # => #<AWS::S3::ACL::Grant (permission) to (grantee)>
+  # => #<SSS::ACL::Grant (permission) to (grantee)>
   grant.permission = 'READ_ACP'
 
 Now we need to indicate who this grant is for. In other words, who the grantee is:
 
   grantee = ACL::Grantee.new
-  # => #<AWS::S3::ACL::Grantee (xsi not set yet)>
+  # => #<SSS::ACL::Grantee (xsi not set yet)>
 
 There are three ways to specify a grantee: 1) by their internal amazon id, such as the one returned with an object's Owner, 
 2) by their Amazon account email address or 3) by specifying a group. As of this writing you can not create custom groups, but 
@@ -366,15 +366,15 @@ Now that our grantee is setup, we'll associate it with the grant:
 
   grant.grantee = grantee
   grant
-  # => #<AWS::S3::ACL::Grant READ_ACP to AllUsers Group>
+  # => #<SSS::ACL::Grant READ_ACP to AllUsers Group>
 
 Are grant has all the information we need. Now that it's ready, we'll add it on to the object's access control policy's list of grants:
 
   policy.grants << grant
   pp policy.grants
-  [#<AWS::S3::ACL::Grant FULL_CONTROL to noradio>,
-   #<AWS::S3::ACL::Grant READ to AllUsers Group>,
-   #<AWS::S3::ACL::Grant READ_ACP to AllUsers Group>]
+  [#<SSS::ACL::Grant FULL_CONTROL to noradio>,
+   #<SSS::ACL::Grant READ to AllUsers Group>,
+   #<SSS::ACL::Grant READ_ACP to AllUsers Group>]
 
 Now that the policy has the new grant, we reuse the <tt>acl</tt> method to persist the policy change:
 
@@ -383,9 +383,9 @@ Now that the policy has the new grant, we reuse the <tt>acl</tt> method to persi
 If we fetch the object's policy again, we see that the grant has been added:
 
   pp S3Object.acl('kiss.jpg', 'marcel').grants
-  [#<AWS::S3::ACL::Grant FULL_CONTROL to noradio>,
-   #<AWS::S3::ACL::Grant READ to AllUsers Group>,
-   #<AWS::S3::ACL::Grant READ_ACP to AllUsers Group>]
+  [#<SSS::ACL::Grant FULL_CONTROL to noradio>,
+   #<SSS::ACL::Grant READ to AllUsers Group>,
+   #<SSS::ACL::Grant READ_ACP to AllUsers Group>]
 
 If we were to access this object's acl url from a browser: 
 
@@ -477,9 +477,9 @@ Now instead of logging right into the jukebox bucket, the logs will go into the 
 Once logs have accumulated, you can access them using the <tt>logs</tt> method:
 
   pp Bucket.logs('jukebox')
-  [#<AWS::S3::Logging::Log '/jukebox-logs/log-2006-11-14-07-15-24-2061C35880A310A1'>,
-   #<AWS::S3::Logging::Log '/jukebox-logs/log-2006-11-14-08-15-27-D8EEF536EC09E6B3'>,
-   #<AWS::S3::Logging::Log '/jukebox-logs/log-2006-11-14-08-15-29-355812B2B15BD789'>]
+  [#<SSS::Logging::Log '/jukebox-logs/log-2006-11-14-07-15-24-2061C35880A310A1'>,
+   #<SSS::Logging::Log '/jukebox-logs/log-2006-11-14-08-15-27-D8EEF536EC09E6B3'>,
+   #<SSS::Logging::Log '/jukebox-logs/log-2006-11-14-08-15-29-355812B2B15BD789'>]
 
 Each log has a <tt>lines</tt> method that gives you information about each request in that log. All the fields are available 
 as named methods. More information is available in Logging::Log::Line.
@@ -502,7 +502,7 @@ Disabling logging is just as simple as enabling it:
 == Errors
 ==== When things go wrong
 
-Anything you do that makes a request to S3 could result in an error. If it does, the AWS::S3 library will raise an exception 
+Anything you do that makes a request to S3 could result in an error. If it does, the SSS library will raise an exception 
 specific to the error. All exception that are raised as a result of a request returning an error response inherit from the 
 ResponseError exception. So should you choose to rescue any such exception, you can simple rescue ResponseError. 
 
@@ -519,7 +519,7 @@ Once you've captured the exception, you can extract the error message from S3, a
 things like the HTTP response code:
 
   error
-  # => #<AWS::S3::BucketNotEmpty The bucket you tried to delete is not empty>
+  # => #<SSS::BucketNotEmpty The bucket you tried to delete is not empty>
   error.message
   # => "The bucket you tried to delete is not empty"
   error.response.code

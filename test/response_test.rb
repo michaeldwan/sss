@@ -49,13 +49,13 @@ class ResponseClassFinderTest < Test::Unit::TestCase
   
   def test_on_base
     assert_equal Base::Response, FindResponseClass.for(Base)
-    assert_equal Base::Response, FindResponseClass.for(AWS::S3::Base)
+    assert_equal Base::Response, FindResponseClass.for(SSS::Base)
     
   end
   
   def test_on_subclass_with_corresponding_response_class
     assert_equal Bucket::Response, FindResponseClass.for(Bucket)
-    assert_equal Bucket::Response, FindResponseClass.for(AWS::S3::Bucket)
+    assert_equal Bucket::Response, FindResponseClass.for(SSS::Bucket)
   end
   
   def test_on_subclass_with_intermediary_parent_that_has_corresponding_response_class

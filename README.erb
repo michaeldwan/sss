@@ -1,58 +1,58 @@
-= AWS::S3
+= SSS
 
-<%= docs_for['AWS::S3'] %>
+<%= docs_for['SSS'] %>
 
-== AWS::S3 Basics
+== SSS Basics
 === The service, buckets and objects
 
 The three main concepts of S3 are the service, buckets and objects. 
 
 ==== The service
 
-<%= docs_for['AWS::S3::Service'] %>
+<%= docs_for['SSS::Service'] %>
  
 ==== Buckets
 
-<%= docs_for['AWS::S3::Bucket'] %>
+<%= docs_for['SSS::Bucket'] %>
 
 ==== Objects
 
-<%= docs_for['AWS::S3::S3Object'] %>
+<%= docs_for['SSS::S3Object'] %>
 
 ==== Streaming uploads
 
-<%= docs_for['AWS::S3::S3Object::store'] %>
+<%= docs_for['SSS::S3Object::store'] %>
 
 == Setting the current bucket
 ==== Scoping operations to a specific bucket
 
-<%= docs_for['AWS::S3::Base.set_current_bucket_to'] %>
+<%= docs_for['SSS::Base.set_current_bucket_to'] %>
 
 == BitTorrent
 ==== Another way to download large files
 
-<%= docs_for['AWS::S3::BitTorrent'] %>
+<%= docs_for['SSS::BitTorrent'] %>
 
 == Access control
 ==== Using canned access control policies
 
-<%= docs_for['AWS::S3::ACL'] %>
+<%= docs_for['SSS::ACL'] %>
 
 ==== Accessing private objects from a browser
 
-<%= docs_for['AWS::S3::S3Object.url_for'] %>
+<%= docs_for['SSS::S3Object.url_for'] %>
 
 == Logging
 ==== Tracking requests made on a bucket
 
-<%= docs_for['AWS::S3::Logging'] %>
+<%= docs_for['SSS::Logging'] %>
 
 == Errors
 ==== When things go wrong
 
-<%= docs_for['AWS::S3::Error'] %>
+<%= docs_for['SSS::Error'] %>
 
 ==== Accessing the last request's response
 
-<%= docs_for['AWS::S3::Service.response'] %>
+<%= docs_for['SSS::Service.response'] %>
   
